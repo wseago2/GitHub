@@ -61,15 +61,13 @@
     // Dispose of any resources that can be recreated.
 }
 
--(NSInteger)tableView:(UITableView *)tableView
-    numberOfRowsInSection:(NSInteger)section
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [_items count];
 }
 
 
-- (void)configureCheckmarkForCell:(UITableViewCell *)cell
-                      withChecklistItem:(ChecklistItem *)item
+- (void)configureCheckmarkForCell:(UITableViewCell *)cell withChecklistItem:(ChecklistItem *)item
 {
     if (item.checked) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -79,8 +77,7 @@
 }
 
 
--(void)configureTextForCell:(UITableViewCell *)cell
-          withChecklistItem:(ChecklistItem *)item
+-(void)configureTextForCell:(UITableViewCell *)cell withChecklistItem:(ChecklistItem *)item
 {
     UILabel *label = (UILabel *)[cell viewWithTag:1000];
     label.text = item.text;
@@ -90,8 +87,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView
     cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView
-                             dequeueReusableCellWithIdentifier:@"ChecklistItem"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ChecklistItem"];
     ChecklistItem *item = _items[indexPath.row];
     [self configureTextForCell:cell withChecklistItem:item];
     [self configureCheckmarkForCell:cell withChecklistItem:item];
@@ -102,8 +98,7 @@
 -(void)tableView:(UITableView *)tableView
     didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView
-                             cellForRowAtIndexPath:indexPath];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     ChecklistItem *item = _items[indexPath.row];
     [item toggleChecked];
     [self configureCheckmarkForCell:cell withChecklistItem:item];
@@ -111,32 +106,48 @@
 }
 
 #pragma addItem method
-
-- (IBAction)addItem
-{
-    NSInteger newRowIndex = [_items count];
-    
-    ChecklistItem *item = [[ChecklistItem alloc] init];
-    item.text = @"I am a new row";
-    item.checked = NO;
-    
-    [_items addObject:item];
-    
-    NSIndexPath *indexPath = [NSIndexPath
-                              indexPathForRow:newRowIndex inSection:0];
-    NSArray *indexPaths = @[indexPath];
-    [self.tableView insertRowsAtIndexPaths:indexPaths
-                          withRowAnimation:UITableViewRowAnimationAutomatic];
-}
-
-- (void)tableView:(UITableView *)tableView
-commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
-forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [_items removeObjectAtIndex:indexPath.row];
     NSArray *indexPaths = @[indexPath];
     [tableView deleteRowsAtIndexPaths:indexPaths
                      withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+#pragma delegate methods
+- (void)addItemViewControllerDidCancel:(AddItemViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+- (void)addItemViewController:(AddItemViewController *)controller didFinishAddingItem:(ChecklistItem *)item
+{
+    
+    NSInteger newRowIndex = [_items count];
+    [_items addObject:item];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:newRowIndex inSection:0];
+    
+    NSArray *indexPaths = @[indexPath];
+    
+    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{   if ([segue.identifier isEqualToString:@"AddItem"])
+    {
+        // 1
+        UINavigationController *navigationController = segue.destinationViewController;
+        
+        // 2
+        AddItemViewController *controller = (AddItemViewController *)navigationController.topViewController;
+        
+        // 3
+        controller.delegate = self;
+    }
 }
 
 @end
