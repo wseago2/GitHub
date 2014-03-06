@@ -57,10 +57,10 @@
             </objects>
             <point key="canvasLocation" x="870" y="189"/>
         </scene>
-        <!--Add Item View Controller - Add Item-->
+        <!--Item Detail View Controller - Add Item-->
         <scene sceneID="ZQr-9T-3mE">
             <objects>
-                <tableViewController id="V3a-CG-JdV" customClass="AddItemViewController" sceneMemberID="viewController">
+                <tableViewController id="V3a-CG-JdV" customClass="ItemDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="kQp-ul-NVx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
