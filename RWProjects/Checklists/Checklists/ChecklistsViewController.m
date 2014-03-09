@@ -43,6 +43,7 @@
     [archiver encodeObject:_items forKey:@"ChecklistItems"];
     [archiver finishEncoding];
     [data writeToFile:[self dataFilePath] atomically:YES];
+    
 }
 
 
@@ -119,8 +120,7 @@
 }
 
 
--(UITableViewCell *)tableView:(UITableView *)tableView
-    cellForRowAtIndexPath:(NSIndexPath *)indexPath
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ChecklistItem"];
     ChecklistItem *item = _items[indexPath.row];
@@ -130,8 +130,7 @@
 }
 
 
--(void)tableView:(UITableView *)tableView
-    didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     ChecklistItem *item = _items[indexPath.row];
@@ -199,7 +198,8 @@
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{   if ([segue.identifier isEqualToString:@"AddItem"])
+{
+    if ([segue.identifier isEqualToString:@"AddItem"])
     {
         // 1
         UINavigationController *navigationController = segue.destinationViewController;
