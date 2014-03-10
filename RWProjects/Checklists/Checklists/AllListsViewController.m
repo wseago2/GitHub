@@ -7,12 +7,47 @@
 //
 
 #import "AllListsViewController.h"
+#import "Checklist.h"
+#import "ChecklistViewController.h"
 
 @interface AllListsViewController ()
 
 @end
 
 @implementation AllListsViewController
+{
+    NSMutableArray *_lists;
+}
+
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if ((self = [super initWithCoder:aDecoder]))
+    {
+        _lists = [[NSMutableArray alloc] initWithCapacity:20];
+        
+        Checklist *list;
+        
+        list = [[Checklist alloc] init];
+        list.name = @"Birthdays";
+        [_lists addObject:list];
+        
+        list = [[Checklist alloc] init];
+        list.name = @"Groceries";
+        [_lists addObject:list];
+        
+        list = [[Checklist alloc] init];
+        list.name = @"Cool Apps";
+        [_lists addObject:list];
+        
+        list = [[Checklist alloc] init];
+        list.name = @"To Do";
+        [_lists addObject:list];
+    }
+    
+    return self;
+}
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -22,6 +57,7 @@
     }
     return self;
 }
+
 
 - (void)viewDidLoad
 {
@@ -34,16 +70,34 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+
 #pragma mark - Table view data source
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"ShowChecklist" sender:nil];
+    Checklist *checklist = _lists[indexPath.row];
+    
+    [self performSegueWithIdentifier:@"ShowChecklist"
+                              sender:checklist];
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue
+                 sender:(id)sender
+{
+    // set title of Checklist with pointer
+    if ([segue.identifier isEqualToString:@"ShowChecklist"])
+    {
+        ChecklistViewController *controller = segue.destinationViewController;
+        
+        controller.checklist = sender;
+    }
 }
 
 
@@ -52,7 +106,7 @@
 {
 
     // Return the number of rows in the section.
-    return 3;
+    return [_lists count];
 }
 
 
@@ -69,7 +123,9 @@
                                       reuseIdentifier:CellIdentifier];
     }
     
-    cell.textLabel.text = [NSString stringWithFormat:@"List %d", indexPath.row];
+    Checklist *checklist = _lists[indexPath.row];
+    cell.textLabel.text = checklist.name;
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     
     return cell;
 }

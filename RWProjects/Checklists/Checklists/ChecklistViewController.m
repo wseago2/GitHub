@@ -8,6 +8,7 @@
 
 #import "ChecklistViewController.h"
 #import "ChecklistItem.h"
+#import "Checklist.h"
 
 @interface ChecklistViewController ()
 
@@ -81,6 +82,9 @@
     
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.title = self.checklist.name;
+    
     
     NSLog(@"Documents folder is %@", [self documentsDirectory]);
     NSLog(@"Data file path is %@", [self dataFilePath]);

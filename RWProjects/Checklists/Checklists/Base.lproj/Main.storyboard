@@ -130,7 +130,7 @@
                             <outlet property="delegate" destination="u0D-yT-0Th" id="3vA-9A-p3g"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="wkl-nF-oeG"/>
+                    <navigationItem key="navigationItem" title="Checklists" id="wkl-nF-oeG"/>
                     <connections>
                         <segue destination="kQ2-aR-QN2" kind="push" identifier="ShowChecklist" id="noL-KY-tLn"/>
                     </connections>
