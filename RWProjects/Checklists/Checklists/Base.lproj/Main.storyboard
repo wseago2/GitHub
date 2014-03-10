@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--Checklist View Controller - Checklist-->
+        <!--Checklist View Controller - Checklist Name-->
         <scene sceneID="lna-k3-ILG">
             <objects>
                 <tableViewController id="kQ2-aR-QN2" customClass="ChecklistViewController" sceneMemberID="viewController">
@@ -45,7 +45,7 @@
                             <outlet property="delegate" destination="kQ2-aR-QN2" id="3Hj-ej-Ws9"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Checklist" id="xDf-lB-r8T">
+                    <navigationItem key="navigationItem" title="Checklist Name" id="xDf-lB-r8T">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="JoK-zK-dMr">
                             <connections>
                                 <segue destination="Mxe-CX-4n4" kind="modal" identifier="AddItem" id="e3u-3H-yiI"/>
@@ -55,12 +55,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zWh-Hs-Ju4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1160" y="189"/>
+            <point key="canvasLocation" x="1190" y="189"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dGr-Bo-V4O">
             <objects>
-                <navigationController definesPresentationContext="YES" id="6ch-Kh-lVN" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ListNavigationController" definesPresentationContext="YES" id="6ch-Kh-lVN" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JYC-iF-dQ2">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -70,7 +70,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6PS-5a-ve3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="552" y="906"/>
+            <point key="canvasLocation" x="1190" y="906"/>
         </scene>
         <!--Item Detail View Controller - Add Item-->
         <scene sceneID="ZQr-9T-3mE">
@@ -145,7 +145,13 @@
                             <outlet property="delegate" destination="u0D-yT-0Th" id="3vA-9A-p3g"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Checklists" id="wkl-nF-oeG"/>
+                    <navigationItem key="navigationItem" title="Checklists" id="wkl-nF-oeG">
+                        <barButtonItem key="rightBarButtonItem" title="Add" id="yn3-4B-Lxn">
+                            <connections>
+                                <segue destination="6ch-Kh-lVN" kind="modal" identifier="AddChecklist" id="ff6-ha-cCf"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="kQ2-aR-QN2" kind="push" identifier="ShowChecklist" id="noL-KY-tLn"/>
                     </connections>
@@ -188,7 +194,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Hz-I6-9GW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1556" y="188"/>
+            <point key="canvasLocation" x="1589" y="183"/>
         </scene>
         <!--List Detail View Controller - Add Checklist-->
         <scene sceneID="wpU-eC-eu8">
@@ -248,7 +254,7 @@
                     </connections>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="1052" y="906"/>
+            <point key="canvasLocation" x="1656" y="906"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
