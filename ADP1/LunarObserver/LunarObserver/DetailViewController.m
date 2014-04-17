@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#import "FeatureItem.h"
 
 @interface DetailViewController ()
 
@@ -18,12 +19,14 @@
 @synthesize typeLabel;
 @synthesize bestTimeLabel;
 @synthesize descriptionLabel;
+@synthesize markedObserved;
 
 @synthesize featureName;
 @synthesize beenObserved;
 @synthesize featureType;
 @synthesize featureBestTime;
 @synthesize featureDescription;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,13 +39,16 @@
 
 - (void)viewDidLoad
 {
-//    NSLog(@"Passed in Name is %@", featureName);
+//    NSLog(@"Feature has been observed %@", beenObserved);
     
     featureLabel.text = featureName;
-    
     typeLabel.text = featureType;
     bestTimeLabel.text = featureBestTime;
     descriptionLabel.text = featureDescription;
+    markedObserved.text = beenObserved;
+    
+    
+    
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -56,15 +62,21 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (IBAction)onMarkObserved:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    NSLog(@"Mark Observed button clicked");
+    
+    // change observed to @"YES"
+    
+    
+    
+    // dismiss view
+    [self.navigationController popViewControllerAnimated:YES];
+    // save data and refresh tableview
+    
+    
+    
 }
-*/
 
 @end

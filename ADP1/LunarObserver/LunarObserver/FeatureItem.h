@@ -12,7 +12,8 @@
 
 
 @property (nonatomic, copy) NSString *featureName;
-@property (nonatomic, assign) BOOL observed;
+@property (nonatomic, copy) NSString *featureIndex;
+@property (nonatomic, copy) NSString *observed;
 @property (nonatomic, copy) NSString *featureType;
 @property (nonatomic, copy) NSString *featureBestTime;
 @property (nonatomic, copy) NSString *featureDescription;

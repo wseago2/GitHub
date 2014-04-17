@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "FeatureItem.h"
 #import "DetailViewController.h"
+#import "CustomHeader.h"
+#import "FeatureCell.h"
 
 @interface ViewController ()
 
@@ -17,10 +19,18 @@
 @implementation ViewController
 {
     NSMutableArray *_features;
+    
+    
+    NSMutableArray *nakedEye;
+    NSMutableArray *binocular;
+    NSMutableArray *telescope;
 }
+
+
 
 #pragma storage methods
 
+// method to set documents directory to a variable
 - (NSString*)documentsDirectory
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -28,11 +38,16 @@
     return documentsDirectory;
 }
 
+
+// method to set data file path
 - (NSString*)dataFilePath
 {
+    // get documents directory file path and append file name
     return [[self documentsDirectory] stringByAppendingPathComponent:@"LunarObserver.plist"];
 }
 
+
+// save data method
 - (void)saveFeatureItems
 {
     NSMutableData *data = [[NSMutableData alloc] init];
@@ -42,6 +57,8 @@
     [data writeToFile:[self dataFilePath] atomically:YES];
 }
 
+
+// load data method
 - (void)loadFeatureItems
 {
     NSString *path = [self dataFilePath];
@@ -51,156 +68,190 @@
         NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
         _features = [unarchiver decodeObjectForKey:@"FeatureItem"];
         [unarchiver finishDecoding];
+        
+        // load section arrays
+        nakedEye = [[NSMutableArray alloc] init];
+        binocular = [[NSMutableArray alloc] init];
+        telescope = [[NSMutableArray alloc] init];
+        
+        [nakedEye addObjectsFromArray:[_features objectAtIndex:0]];
+        [binocular addObjectsFromArray:[_features objectAtIndex:1]];
+        [telescope addObjectsFromArray:[_features objectAtIndex:2]];
+        
+        
     } else {
         
-        // array of features
+        // array of features to hold all features
         _features = [[NSMutableArray alloc] init];
+        
+        // arrays for sections
+        nakedEye = [[NSMutableArray alloc] init];
+        binocular = [[NSMutableArray alloc] init];
+        telescope = [[NSMutableArray alloc] init];
         
         FeatureItem *item;
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Old Moon in New Moon's Arms";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Within 72 Hours of New Moon";
-        item.featureDescription = @"The Moon's Ashen Glow";
-        [_features addObject:item];
+        item.featureIndex = @"0";
+        item.observed = @"NO";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Within 72 Hours of New Moon.";
+        item.featureDescription = @"The Moon's Ashen Glow Just Before New Moon.";
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"New Moon in Old Moon's Arms";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Within 72 Hours of New Moon";
-        item.featureDescription = @"The Moon's Ashen Glow";
-        [_features addObject:item];
+        item.featureIndex = @"1";
+        item.observed = @"YES";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Within 72 Hours of New Moon.";
+        item.featureDescription = @"The Moon's Ashen Glow Just After New Moon.";
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crescent Moon, Waxing";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Within 40 Hours of New Moon";
-        item.featureDescription = @"Young Moon, Always Seen to the West";
-        [_features addObject:item];
+        item.featureIndex = @"2";
+        item.observed = @"NO";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Within 40 Hours of New Moon.";
+        item.featureDescription = @"Young Moon. Always Seen to the West.";
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crescent Moon, Waning";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Within 48 Hours of New Moon";
-        item.featureDescription = @"Old Moon, Seen to the East Before Dawn";
-        [_features addObject:item];
+        item.featureIndex = @"3";
+        item.observed = @"NO";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Within 48 Hours of New Moon.";
+        item.featureDescription = @"Old Moon. Seen to the East Before Dawn.";
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Man in the Moon";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Full Moon";
-        item.featureDescription = @"Pareidolic Image of a Human Face";
-        [_features addObject:item];
+        item.featureIndex = @"4";
+        item.observed = @"NO";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Near Full Moon.";
+        item.featureDescription = @"Pareidolic Image of a Human Face.";
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Woman in the Moon";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Full Moon";
-        item.featureDescription = @"Pareidolic Image of a Female Figure";
-        [_features addObject:item];
+        item.featureIndex = @"5";
+        item.observed = @"NO";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Near Full Moon.";
+        item.featureDescription = @"Pareidolic Image of a Female Figure.";
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Rabbit in the Moon";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Full Moon";
-        item.featureDescription = @"Pareidolic Image of a Rabbit";
-        [_features addObject:item];
+        item.featureIndex = @"6";
+        item.observed = @"NO";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Near Full Moon.";
+        item.featureDescription = @"Pareidolic Image of a Rabbit.";
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Cow Jumping Over the Moon";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Full Moon";
-        item.featureDescription = @"Pareidolic Image of a Cow Jumping the Moon";
-        [_features addObject:item];
+        item.featureIndex = @"7";
+        item.observed = @"NO";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Near Full Moon.";
+        item.featureDescription = @"Pareidolic Image of a Cow Jumping the Moon.";
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Mare Crisium";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Full Moon";
+        item.featureIndex = @"8";
+        item.observed = @"NO";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Near Full Moon.";
         item.featureDescription = @"The Sea of Crises. Formed During the Pre-Imbrian Period. 555 Kilometers in Diameter.";
-        [_features addObject:item];
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Mare Fecunditatis";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Full Moon";
+        item.featureIndex = @"9";
+        item.observed = @"NO";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Near Full Moon.";
         item.featureDescription = @"The Sea of Fertility. Formed in the Pre-Nectarian Epoch. 840 Kilometers in Diameter.";
-        [_features addObject:item];
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Mare Serenitatis";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Full Moon";
-        item.featureDescription = @"";
-        [_features addObject:item];
+        item.featureIndex = @"10";
+        item.observed = @"NO";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Near Full Moon.";
+        item.featureDescription = @"The Sea of Serenity. Landing Site of Apollo 17. 674 Kilometers in Diameter.";
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Mare Tranquillitatis";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Full Moon";
-        item.featureDescription = @"";
-        [_features addObject:item];
+        item.featureIndex = @"11";
+        item.observed = @"YES";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Near Full Moon.";
+        item.featureDescription = @"The Sea of Tranquility. Landing Site of Apollo 11. 873 Kilometers in Diameter.";
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Mare Nectaris";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Full Moon";
-        item.featureDescription = @"";
-        [_features addObject:item];
+        item.featureIndex = @"12";
+        item.observed = @"NO";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Near Full Moon.";
+        item.featureDescription = @"The Sea of Nectar. 333 Kilometers in Diameter.";
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Mare Imbrium";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Full Moon";
-        item.featureDescription = @"";
-        [_features addObject:item];
+        item.featureIndex = @"13";
+        item.observed = @"NO";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Near Full Moon.";
+        item.featureDescription = @"The Sea of Rains. Landing Site of Luna 17, Apollo 15, and Chang'e 3. 1145 Kilometers in Diameter.";
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Mare Frigoris";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Full Moon";
-        item.featureDescription = @"";
-        [_features addObject:item];
+        item.featureIndex = @"14";
+        item.observed = @"NO";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Near Full Moon.";
+        item.featureDescription = @"The Sea of Cold. 1446 Kilometers in Diameter.";
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Mare Nubium";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Full Moon";
-        item.featureDescription = @"";
-        [_features addObject:item];
+        item.featureIndex = @"15";
+        item.observed = @"NO";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Near Full Moon.";
+        item.featureDescription = @"The Sea of Clouds. 715 Kilometers in Diameter.";
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Mare Humorum";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Full Moon";
-        item.featureDescription = @"";
-        [_features addObject:item];
+        item.featureIndex = @"16";
+        item.observed = @"NO";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Near Full Moon.";
+        item.featureDescription = @"The Sea of Moisture. 389 Kilometers in Diameter.";
+        [nakedEye addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Mare Oceanus Procellarum";
-        item.observed = NO;
-        item.featureType = @"NakedEye";
-        item.featureBestTime = @"Full Moon";
-        item.featureDescription = @"";
-        [_features addObject:item];
+        item.featureIndex = @"17";
+        item.observed = @"NO";
+        item.featureType = @"Naked Eye Feature.";
+        item.featureBestTime = @"Best Observed Near Full Moon.";
+        item.featureDescription = @"The Ocean of Storms. Landing Site of Apollo 12. 2592 Kilometers in Diameter.";
+        [nakedEye addObject:item];
         
         // ******************************
         // Binocular Features
@@ -208,371 +259,417 @@
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Lunar Rays";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"18";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"Full Moon";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Sinus Iridum";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"19";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"Full Moon";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Sinus Medii";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"20";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"Full Moon";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Sinus Roris";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"21";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"Full Moon";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Palus Somnii";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"22";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"Full Moon";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Palus Epidemiarum";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"23";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"Full Moon";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Mare Vaorum";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"24";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"Full Moon";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Langrenus";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"25";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"4 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Vendelinus";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"26";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"4 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Petavius";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"27";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"4 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Cleomedes";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"28";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"4 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Atlas";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"29";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"4 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Hercules";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"30";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"4 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Endymion";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"31";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"4 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Macrobius";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"32";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"4 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Piccolomini";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"33";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Theophilus";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"34";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Cyrillus";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"35";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Catharina";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"36";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Posidonius";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"37";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Fracastorius";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"38";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Aristoteles";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"39";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Eudoxes";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"40";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Cassini";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"41";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Hipparchus";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"42";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Albategnius";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"43";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Aristillus";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"44";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Autolycus";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"45";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Maurolycus";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"46";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Plato";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"47";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Archimedes";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"48";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Ptolemaeus";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"49";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Alphonsus";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"50";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Arzachel";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"51";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Walter";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"52";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Maginus";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"53";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Tycho";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"54";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Clavius";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"55";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Eratosthenes";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"56";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Longomontanus";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"57";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Copernicus";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"58";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Bullialdus";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"59";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Aristarchus";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"60";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Gassendi";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"61";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Kepler";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"62";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"14 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Grimaldi";
-        item.observed = NO;
-        item.featureType = @"Binocular";
+        item.featureIndex = @"63";
+        item.observed = @"NO";
+        item.featureType = @"Binocular Feature.";
         item.featureBestTime = @"14 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [binocular addObject:item];
         
         // ******************************
         // Telescope Features
@@ -580,291 +677,336 @@
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Sinus Aestuum";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"64";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Lacus Mortis";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"65";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Palus Putredinis";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"66";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Promontorium Laplace";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"67";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Promontorium Heraclides";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"68";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Promontorium Agarum";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"69";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Montes Alpes";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"70";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Montes Apenninus";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"71";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Mons Hadley";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"72";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"MonsPiton";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"73";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Mons Pico";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"74";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Rupes Altai";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"75";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Rima Hyginus";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"76";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Valis Schroteri";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"77";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Vallis Alpes";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"78";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Rupes Recta";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"79";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Picard";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"80";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"4 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Furnerius";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"81";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"4 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Petavius Wall";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"82";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"4 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Messier/Messier A";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"83";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"4 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Proclus";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"84";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"4 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Fabricius";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"85";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"4 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Plinius";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"86";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Mitchell";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"87";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Cassini A";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"88";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Manilius";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"89";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Gemma Frisius";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"90";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"7 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Davy";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"91";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Pitatus";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"92";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Billy";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"93";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Fra Mauro";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"94";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Clavius Craterlets";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"95";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Hippalus";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"96";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Hershel, J.";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"97";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"10 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Schickard";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"98";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"14 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
         
         item = [[FeatureItem alloc] init];
         item.featureName = @"Crater Reiner Gamma";
-        item.observed = NO;
-        item.featureType = @"Telescope";
+        item.featureIndex = @"99";
+        item.observed = @"NO";
+        item.featureType = @"Telescope Feature.";
         item.featureBestTime = @"14 Days Old";
         item.featureDescription = @"";
-        [_features addObject:item];
+        [telescope addObject:item];
+        
+        // add feature type arrays to _features array
+        [_features addObject:nakedEye];
+        [_features addObject:binocular];
+        [_features addObject:telescope];
+        
+        // save to NSUserDefaults
+//        [self saveFeatureItems];
+        
     }
 }
 
@@ -873,14 +1015,19 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    NSLog(@"Documents folder is %@", [self documentsDirectory]);
-    
+//    NSLog(@"Documents folder is %@", [self documentsDirectory]);
     NSLog(@"Data file path is %@", [self dataFilePath]);
     
     [self loadFeatureItems];
- 
-
     
+    // register for notification events to save data
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveFeatureItems)
+                                                 name:@"UIApplicationDidEnterBackgroundNotification"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveFeatureItems)
+                                                 name:UIApplicationWillTerminateNotification
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -893,37 +1040,60 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return [_features count];
 }
 
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section == 0)
+    {
+        return @"Naked Eye Features";
+    }
+        else if (section == 1)
+    {
+        return @"Binocular Features";
+    }
+        else
+    {
+        return @"Telescope Features";
+    }
+    
+}
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 100;
     
- /*   if (section == 0)
+    if (section == 0)
         {
-            return 18;
-        } else
-            if (section == 1)
-            {
-                return 46;
-            } else {
-                return 36;
+            return [nakedEye count];
         }
- */
+            else if (section == 1)
+        {
+            return [binocular count];
+        }
+            else
+        {
+            return [telescope count];
+        }
+ 
 }
+
 
 - (void)configureBackgroundColorForCell:(UITableViewCell *)cell
                             withFeatureItem:(FeatureItem *)item
 {
-    if (item.observed){
-        cell.backgroundColor = [UIColor greenColor];
-    } else {
-        cell.backgroundColor = [UIColor redColor];
+    if ([item.observed  isEqual:@"NO"]){
+        cell.backgroundColor = [UIColor colorWithRed:191/255.0f green:226/255.0f blue:255/255.0f alpha:1.0f];
     }
+    else
+    {
+        cell.backgroundColor = [UIColor colorWithRed:134/255.0f green:158/255.0f blue:179/255.0f alpha:1.0f];
+    }
+    
 }
+
 
 - (void)configureTextForCell:(UITableViewCell*)cell withFeatureItem:(FeatureItem*)item
 {
@@ -931,75 +1101,125 @@
     label.text = item.featureName;
 }
 
+
 - (UITableViewCell*)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FeatureCell"];
+    FeatureCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FeatureCell"];
     if (cell != nil)
     {
+
         if ([indexPath section] == 0)
         {
-            
+//            NSLog(@"Feature type is %@", [[nakedEye objectAtIndex:indexPath.row] featureType]);
+            FeatureItem *item = nakedEye[indexPath.row];
+//            cell.featureCellTitle.text = item.featureName;
+            [self configureTextForCell:cell withFeatureItem:item];
+            [self configureBackgroundColorForCell:cell withFeatureItem:item];
         }
         
         else if ([indexPath section] == 1)
         {
-            
+//            NSLog(@"Feature type is %@", [[binocular objectAtIndex:indexPath.row] featureType]);
+            FeatureItem *item = binocular[indexPath.row];
+            [self configureTextForCell:cell withFeatureItem:item];
+            [self configureBackgroundColorForCell:cell withFeatureItem:item];
         }
-        
-        else if ([indexPath section] == 2)
-        {
-            
+
+       else if ([indexPath section] == 2)
+       {
+//            NSLog(@"Feature type is %@", [[telescope objectAtIndex:indexPath.row] featureType]);
+            FeatureItem *item = telescope[indexPath.row];
+            [self configureTextForCell:cell withFeatureItem:item];
+            [self configureBackgroundColorForCell:cell withFeatureItem:item];
         }
     }
     
-    FeatureItem *item = _features[indexPath.row];
-    
-    [self configureTextForCell:cell withFeatureItem:item];
-    [self configureBackgroundColorForCell:cell withFeatureItem:item];
-    
     return cell;
+    
 }
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"showFeatureDetails"])
     {
-        // pass name
+        // pass data
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+//        NSLog(@"indexPath = %@", indexPath);
         DetailViewController *detailViewController = segue.destinationViewController;
-        detailViewController.featureName = [[_features objectAtIndex:indexPath.row] featureName];
         
-        // pass observed
-//        detailViewController.beenObserved = [[_features objectAtIndex:indexPath.row] observed];
-        
-        
-        // pass type
-        detailViewController.featureType = [[_features objectAtIndex:indexPath.row] featureType];
-        NSLog(@"Feature type is %@", [[_features objectAtIndex:indexPath.row] featureType]);
-        
-        // pass bestTime
-        detailViewController.featureBestTime = [[_features objectAtIndex:indexPath.row] featureBestTime];
-        
-        // pass description
-        detailViewController.featureDescription = [[_features objectAtIndex:indexPath.row] featureDescription];
+        if ([indexPath section] == 0)
+        {
+            detailViewController.featureName = [[nakedEye objectAtIndex:indexPath.row] featureName];
+            detailViewController.beenObserved = [[nakedEye objectAtIndex:indexPath.row] observed];
+            detailViewController.featureType = [[nakedEye objectAtIndex:indexPath.row] featureType];
+            detailViewController.featureBestTime = [[nakedEye objectAtIndex:indexPath.row] featureBestTime];
+            detailViewController.featureDescription = [[nakedEye objectAtIndex:indexPath.row] featureDescription];
+        }
+        else if ([indexPath section] == 1)
+        {
+            detailViewController.featureName = [[binocular objectAtIndex:indexPath.row] featureName];
+            detailViewController.beenObserved = [[binocular objectAtIndex:indexPath.row] observed];
+            detailViewController.featureType = [[binocular objectAtIndex:indexPath.row] featureType];
+            detailViewController.featureBestTime = [[binocular objectAtIndex:indexPath.row] featureBestTime];
+            detailViewController.featureDescription = [[binocular objectAtIndex:indexPath.row] featureDescription];
+        }
+        else if ([indexPath section] == 2)
+        {
+            detailViewController.featureName = [[telescope objectAtIndex:indexPath.row] featureName];
+            detailViewController.beenObserved = [[telescope objectAtIndex:indexPath.row] observed];
+            detailViewController.featureType = [[telescope objectAtIndex:indexPath.row] featureType];
+            detailViewController.featureBestTime = [[telescope objectAtIndex:indexPath.row] featureBestTime];
+            detailViewController.featureDescription = [[telescope objectAtIndex:indexPath.row] featureDescription];
+        }
+ 
     }
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    FeatureItem *item = _features[indexPath.row];
-    
-    [item toggleObserved];
-    
-    [self configureBackgroundColorForCell:cell withFeatureItem:item];
+//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    [self saveFeatureItems];
-    
+
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 56;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 72;
+}
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    CustomHeader *headerCell = [tableView dequeueReusableCellWithIdentifier:@"SectionHeader"];
+    if (headerCell != nil)
+    {
+        if (section == 0)
+        {
+            headerCell.headerCellTitle.text = @"Naked Eye Features";
+        }
+        else if (section == 1)
+        {
+            headerCell.headerCellTitle.text = @"Binocular Features";
+        }
+        else
+        {
+            headerCell.headerCellTitle.text = @"Telescope Features";
+        }
+            
+    }
+    return headerCell;
 }
 
 @end
