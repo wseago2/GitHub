@@ -15,15 +15,15 @@
 		3F08B08618FC68A700B754CD /* LunarObserver.html in Resources */ = {isa = PBXBuildFile; fileRef = 3F08B08518FC68A700B754CD /* LunarObserver.html */; };
 		3F08B08918FC6A6E00B754CD /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F08B08818FC6A6E00B754CD /* AboutViewController.m */; };
 		3F08B09118FCE2CA00B754CD /* StartupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F08B09018FCE2CA00B754CD /* StartupViewController.m */; };
-		3F2846BB1912E90C0095A100 /* lunarObserver120.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F2846BA1912E90C0095A100 /* lunarObserver120.png */; };
+		3F17C1851912F9A400CC47A2 /* LunarBlur.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F17C1841912F9A400CC47A2 /* LunarBlur.png */; };
 		3F2F2B6518FEB0B40020B3AF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F2F2B6418FEB0B40020B3AF /* CoreLocation.framework */; };
 		3F2F2B6818FEBCFD0020B3AF /* MoonPhaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F2F2B6718FEBCFD0020B3AF /* MoonPhaseViewController.m */; };
 		3F2F2B7018FF39620020B3AF /* CustomHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F2F2B6F18FF39620020B3AF /* CustomHeader.m */; };
 		3F2F2B7318FF53610020B3AF /* FeatureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F2F2B7218FF53610020B3AF /* FeatureCell.m */; };
-		3F79AB7E1912CF3D009B42EF /* LunarBlur.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F79AB7D1912CF3D009B42EF /* LunarBlur.png */; };
-		3F79AB8D1912D06A009B42EF /* binoculars-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F79AB841912D06A009B42EF /* binoculars-32.png */; };
-		3F79AB931912D0CF009B42EF /* waning_gibbous-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F79AB921912D0CF009B42EF /* waning_gibbous-32.png */; };
-		3F79AB951912D0E7009B42EF /* about-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F79AB941912D0E7009B42EF /* about-32.png */; };
+		3FADC1B01912F524004C37F7 /* about-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FADC1AF1912F524004C37F7 /* about-32.png */; };
+		3FADC1B21912F71E004C37F7 /* waning_gibbous-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FADC1B11912F71E004C37F7 /* waning_gibbous-32.png */; };
+		3FADC1B41912F736004C37F7 /* binoculars-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FADC1B31912F736004C37F7 /* binoculars-32.png */; };
+		3FADC1B61912F768004C37F7 /* 120LunarObserver.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FADC1B51912F768004C37F7 /* 120LunarObserver.png */; };
 		3FFFD2DE18F2C07C0017BDCD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFFD2DD18F2C07C0017BDCD /* Foundation.framework */; };
 		3FFFD2E018F2C07C0017BDCD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFFD2DF18F2C07C0017BDCD /* CoreGraphics.framework */; };
 		3FFFD2E218F2C07C0017BDCD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFFD2E118F2C07C0017BDCD /* UIKit.framework */; };
@@ -63,7 +63,7 @@
 		3F08B08818FC6A6E00B754CD /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		3F08B08F18FCE2CA00B754CD /* StartupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartupViewController.h; sourceTree = "<group>"; };
 		3F08B09018FCE2CA00B754CD /* StartupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartupViewController.m; sourceTree = "<group>"; };
-		3F2846BA1912E90C0095A100 /* lunarObserver120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lunarObserver120.png; path = ../../../../lunarObserver120.png; sourceTree = "<group>"; };
+		3F17C1841912F9A400CC47A2 /* LunarBlur.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LunarBlur.png; sourceTree = "<group>"; };
 		3F2F2B6418FEB0B40020B3AF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		3F2F2B6618FEBCFD0020B3AF /* MoonPhaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoonPhaseViewController.h; sourceTree = "<group>"; };
 		3F2F2B6718FEBCFD0020B3AF /* MoonPhaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoonPhaseViewController.m; sourceTree = "<group>"; };
@@ -71,10 +71,10 @@
 		3F2F2B6F18FF39620020B3AF /* CustomHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomHeader.m; path = ../CustomHeader.m; sourceTree = "<group>"; };
 		3F2F2B7118FF53610020B3AF /* FeatureCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureCell.h; sourceTree = "<group>"; };
 		3F2F2B7218FF53610020B3AF /* FeatureCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureCell.m; sourceTree = "<group>"; };
-		3F79AB7D1912CF3D009B42EF /* LunarBlur.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LunarBlur.png; path = ../../../../LunarBlur.png; sourceTree = "<group>"; };
-		3F79AB841912D06A009B42EF /* binoculars-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "binoculars-32.png"; path = "../../../../binoculars/binoculars-32.png"; sourceTree = "<group>"; };
-		3F79AB921912D0CF009B42EF /* waning_gibbous-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "waning_gibbous-32.png"; path = "../../../../waning_gibbous/waning_gibbous-32.png"; sourceTree = "<group>"; };
-		3F79AB941912D0E7009B42EF /* about-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "about-32.png"; path = "../../../../about/about-32.png"; sourceTree = "<group>"; };
+		3FADC1AF1912F524004C37F7 /* about-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about-32.png"; sourceTree = "<group>"; };
+		3FADC1B11912F71E004C37F7 /* waning_gibbous-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "waning_gibbous-32.png"; path = "../waning_gibbous-32.png"; sourceTree = "<group>"; };
+		3FADC1B31912F736004C37F7 /* binoculars-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "binoculars-32.png"; sourceTree = "<group>"; };
+		3FADC1B51912F768004C37F7 /* 120LunarObserver.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 120LunarObserver.png; sourceTree = "<group>"; };
 		3FFFD2DA18F2C07C0017BDCD /* LunarObserver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LunarObserver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FFFD2DD18F2C07C0017BDCD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3FFFD2DF18F2C07C0017BDCD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -128,11 +128,11 @@
 		3F08B07C18FC64D600B754CD /* images */ = {
 			isa = PBXGroup;
 			children = (
-				3F2846BA1912E90C0095A100 /* lunarObserver120.png */,
-				3F79AB941912D0E7009B42EF /* about-32.png */,
-				3F79AB921912D0CF009B42EF /* waning_gibbous-32.png */,
-				3F79AB841912D06A009B42EF /* binoculars-32.png */,
-				3F79AB7D1912CF3D009B42EF /* LunarBlur.png */,
+				3F17C1841912F9A400CC47A2 /* LunarBlur.png */,
+				3FADC1B51912F768004C37F7 /* 120LunarObserver.png */,
+				3FADC1B31912F736004C37F7 /* binoculars-32.png */,
+				3FADC1B11912F71E004C37F7 /* waning_gibbous-32.png */,
+				3FADC1AF1912F524004C37F7 /* about-32.png */,
 				3F0362E218FD662100D9D4CC /* background65.png */,
 				3F0362E018FD61C300D9D4CC /* Default@2x.png */,
 				3F08B08318FC66C800B754CD /* 309.png */,
@@ -312,18 +312,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F0362E118FD61C300D9D4CC /* Default@2x.png in Resources */,
+				3F17C1851912F9A400CC47A2 /* LunarBlur.png in Resources */,
 				3F08B08418FC66C800B754CD /* 309.png in Resources */,
 				3FFFD2F618F2C07C0017BDCD /* Images.xcassets in Resources */,
+				3FADC1B01912F524004C37F7 /* about-32.png in Resources */,
 				3FFFD2E818F2C07C0017BDCD /* InfoPlist.strings in Resources */,
-				3F79AB931912D0CF009B42EF /* waning_gibbous-32.png in Resources */,
 				3F0362E318FD662100D9D4CC /* background65.png in Resources */,
-				3F79AB7E1912CF3D009B42EF /* LunarBlur.png in Resources */,
 				3F08B08618FC68A700B754CD /* LunarObserver.html in Resources */,
 				3F08B08218FC668800B754CD /* 306.png in Resources */,
-				3F79AB8D1912D06A009B42EF /* binoculars-32.png in Resources */,
-				3F2846BB1912E90C0095A100 /* lunarObserver120.png in Resources */,
-				3F79AB951912D0E7009B42EF /* about-32.png in Resources */,
+				3FADC1B21912F71E004C37F7 /* waning_gibbous-32.png in Resources */,
+				3FADC1B41912F736004C37F7 /* binoculars-32.png in Resources */,
 				3FFFD2F118F2C07C0017BDCD /* Main.storyboard in Resources */,
+				3FADC1B61912F768004C37F7 /* 120LunarObserver.png in Resources */,
 				3F08B07E18FC652300B754CD /* 221.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
