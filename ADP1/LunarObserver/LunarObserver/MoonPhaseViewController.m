@@ -44,8 +44,6 @@ CLLocationManager *locationManager;
     // format latitude and longitude to strings, truncate to 3 decimal places, set to variables
     currentLatitude = [NSString stringWithFormat:@"%.3f", locationManager.location.coordinate.latitude];
     currentLongitude = [NSString stringWithFormat:@"%.3f", locationManager.location.coordinate.longitude];
-    NSLog(@"Current Latitude = %@", currentLatitude);
-    NSLog(@"Current Longitude = %@", currentLongitude);
     
     // update labels
     myLatitude.text = currentLatitude;
@@ -63,28 +61,18 @@ CLLocationManager *locationManager;
     weatherUnderground = [NSJSONSerialization JSONObjectWithData:response options:0 error:&jsonError];
     if (weatherUnderground != nil)
     {
-        NSLog(@"%@", [weatherUnderground description]);
         moonArray = [weatherUnderground objectForKey:@"moon_phase"];
         if (moonArray != nil)
         {
-            NSLog(@"%@", [moonArray description]);
             NSString *ageOfMoon = [moonArray objectForKey:@"ageOfMoon"];
             NSString *phaseOfMoon = [moonArray objectForKey:@"phaseofMoon"];
             NSString *percentIlluminated = [moonArray objectForKey:@"percentIlluminated"];
-            
-            NSLog(@"%@", ageOfMoon);
-            NSLog(@"%@", phaseOfMoon);
-            NSLog(@"%@", percentIlluminated);
             
             myMoonAge.text = ageOfMoon;
             myPhase.text = phaseOfMoon;
             myIllumination.text = percentIlluminated;
         }
     }
-    
-   
-    
-    
 }
 
 - (void)viewDidLoad

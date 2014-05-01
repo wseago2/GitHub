@@ -8,6 +8,7 @@
 
 #import "DetailViewController.h"
 #import "FeatureItem.h"
+#import "ViewController.h"
 
 @interface DetailViewController ()
 
@@ -19,13 +20,14 @@
 @synthesize typeLabel;
 @synthesize bestTimeLabel;
 @synthesize descriptionLabel;
-@synthesize markedObserved;
 
 @synthesize featureName;
 @synthesize beenObserved;
 @synthesize featureType;
 @synthesize featureBestTime;
 @synthesize featureDescription;
+
+@synthesize selectedFeatureIndexPath;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -38,17 +40,12 @@
 }
 
 - (void)viewDidLoad
-{
-//    NSLog(@"Feature has been observed %@", beenObserved);
-    
+{   
     featureLabel.text = featureName;
     typeLabel.text = featureType;
     bestTimeLabel.text = featureBestTime;
     descriptionLabel.text = featureDescription;
-    markedObserved.text = beenObserved;
-    
-    
-    
+
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -65,18 +62,19 @@
 
 - (IBAction)onMarkObserved:(id)sender
 {
-    NSLog(@"Mark Observed button clicked");
-    
     // change observed to @"YES"
+    self.beenObserved = @"YES";
     
+    // set indexPath to variables
+    NSUInteger Section = selectedFeatureIndexPath.section;
+    NSUInteger Row = selectedFeatureIndexPath.row;
     
+    // call toggleObserved method
+    [ViewController toggleObserved:Section row:Row];
     
     // dismiss view
     [self.navigationController popViewControllerAnimated:YES];
-    // save data and refresh tableview
-    
-    
-    
+
 }
 
 @end

@@ -8,17 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "FeatureItem.h"
+#import "ViewController.h"
 
 @interface DetailViewController : UIViewController
-{
-    
-}
+
+@property NSIndexPath *selectedFeatureIndexPath;
 
 @property (nonatomic, strong) IBOutlet UILabel *featureLabel;
 @property (nonatomic, strong) IBOutlet UILabel *typeLabel;
 @property (nonatomic, strong) IBOutlet UILabel *bestTimeLabel;
 @property (nonatomic, strong) IBOutlet UILabel *descriptionLabel;
-@property (nonatomic, strong) IBOutlet UILabel *markedObserved;
+
 
 @property (nonatomic, strong) NSString *featureName;
 @property (nonatomic, strong) NSString *beenObserved;

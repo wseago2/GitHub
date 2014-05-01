@@ -8,12 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+
+
+
 @interface ViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource, NSCoding>
 {
-    
+    IBOutlet UITableView *myTableView;
+    NSMutableArray *features;
+//    NSIndexPath *observedFeatureIndexPath;
+//    NSObject *observedObject;
 }
 
-- (void)saveFeatureItems;
+@property NSIndexPath *observedIndexPath;
+@property NSObject *observedObject;
 
++ (void)toggleObserved:(NSUInteger)Section row:(NSUInteger)Row;
 
 @end

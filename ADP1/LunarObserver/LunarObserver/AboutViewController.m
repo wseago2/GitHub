@@ -23,18 +23,23 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    // setup html file
+    NSString *htmlFile = [[NSBundle mainBundle] pathForResource:@"LunarObserver" ofType:@"html"];
+    NSData *htmlData = [NSData dataWithContentsOfFile:htmlFile];
+    NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+    
+    // display html file
+    [self.webView loadData:htmlData MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:baseURL];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    // setup html file
-    NSString *htmlFile = [[NSBundle mainBundle] pathForResource:@"LunarObserver" ofType:@"html"];
-    NSData *htmlData = [NSData dataWithContentsOfFile:htmlFile];
-    NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
 
-    // display html file
-    [self.webView loadData:htmlData MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:baseURL];
 }
 
 - (void)didReceiveMemoryWarning

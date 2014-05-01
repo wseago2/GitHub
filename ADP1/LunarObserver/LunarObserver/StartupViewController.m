@@ -30,22 +30,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    
-    
-    // api call here 
-    
-    // delay is to simulate time getting geo location
+
     [self performSelector:@selector(goToTabBarController) withObject:nil afterDelay:3.0f];
-}
-
-
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-
-        
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,7 +42,7 @@
 
 - (void)goToTabBarController
 {
-    
+    // segue to tabBarViewController
     [self performSegueWithIdentifier:@"TabBarController" sender:self];
 }
 
